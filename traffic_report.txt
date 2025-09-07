@@ -1,0 +1,12 @@
+Traffic Light Detection Report
+====================================
+Generated at: 2025-09-07T11:21:27.708177
+Source: traffic.mp4
+Total frames processed: 394
+
+RED: 264 frames (67.01%)
+YELLOW: 394 frames (100.00%)
+GREEN: 394 frames (100.00%)
+
+Output video: traffic_output.avi
+CSV log: traffic_output.csv
