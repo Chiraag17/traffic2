@@ -1,5 +1,4 @@
 # traffic_light_detector.py
-# Real-time traffic light detector with output video, report, and CSV logging
 
 import cv2
 import numpy as np
@@ -10,25 +9,18 @@ import math
 import csv
 from datetime import datetime
 
-# -------------------------
-# Args
-# -------------------------
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--video", type=str, help="Path to input video file (optional). If omitted, webcam is used.")
 args = parser.parse_args()
 
-# -------------------------
-# Open capture
-# -------------------------
 source = args.video if args.video else 0
 cap = cv2.VideoCapture(source)
 if not cap.isOpened():
     print(f"[ERROR] Could not open video source: {source}")
     exit(1)
 
-# -------------------------
-# Output filenames
-# -------------------------
+
 if args.video:
     base = os.path.splitext(os.path.basename(args.video))[0]
 else:
@@ -38,9 +30,7 @@ out_video_fname = f"{base}_output.avi"
 report_fname = f"{base}_report.txt"
 csv_fname = f"{base}_output.csv"
 
-# -------------------------
-# VideoWriter (match source fps & size)
-# -------------------------
+
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)) or 640
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) or 480
 fps = cap.get(cv2.CAP_PROP_FPS)
@@ -50,9 +40,8 @@ if not fps or fps <= 0 or np.isnan(fps):
 fourcc = cv2.VideoWriter_fourcc(*"XVID")
 out = cv2.VideoWriter(out_video_fname, fourcc, fps, (width, height))
 
-# -------------------------
-# HSV color ranges
-# -------------------------
+
+
 HSV_RANGES = {
     "red1": (np.array([0, 100, 70]), np.array([10, 255, 255])),
     "red2": (np.array([160, 100, 70]), np.array([180, 255, 255])),
@@ -60,9 +49,7 @@ HSV_RANGES = {
     "green": (np.array([36, 60, 60]), np.array([90, 255, 255])),
 }
 
-# -------------------------
-# Parameters
-# -------------------------
+
 MIN_CONTOUR_AREA = 100
 MAX_CONTOUR_AREA = 20000
 CIRCULARITY_MIN = 0.4
